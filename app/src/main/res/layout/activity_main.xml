@@ -34,8 +34,14 @@
         android:layout_width="match_parent"
         android:layout_height="150sp"
         android:orientation="horizontal"
-        android:layout_weight="1"
-        android:weightSum="1">
+        android:layout_weight="1">
+<!--            <ImageView-->
+<!--                android:id="@+id/imgCarta"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:src="@drawable/espada1"/>-->
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="0dp"

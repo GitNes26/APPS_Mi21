@@ -10,6 +10,7 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +31,9 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -40,11 +43,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public int num=0;
     public int puntos=0;
 //    EditText nombre = findViewById(R.id.nombre);
+    ImageView imgCarta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        imgCarta = findViewById(R.id.imgCarta);
 
         rvCartas = findViewById(R.id.recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -52,13 +58,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rvCartas.setLayoutManager(layoutManager);
 
         //Este es de prueba a manera local
-//        List<Numero> ListaNumeros = new ArrayList<>();
+        List<Numero> ListaNumeros = new ArrayList<>();
+        ListaNumeros.add(new Numero( String.valueOf("1")));
+        ListaNumeros.add(new Numero( String.valueOf("7")));
+        ListaNumeros.add(new Numero( String.valueOf("11")));
 //        for (int i=1; i <=11; i++){
 //          ListaNumeros.add(new Numero( String.valueOf(i)));
 //        }
 //
-//        AdaptadorNumero Numeros = new AdaptadorNumero(ListaNumeros);
-//        rvCartas.setAdapter(Numeros);
+        AdaptadorNumero Numeros = new AdaptadorNumero(ListaNumeros);
+        rvCartas.setAdapter(Numeros);
         
         mVolleyS = VolleyS.getInstance(this.getApplicationContext());
         cartero = mVolleyS.getRequestQueue();
@@ -87,6 +96,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                 TextView puntaje = findViewById(R.id.puntos);
                                 puntaje.setText(String.valueOf(puntos));
+
+//                                ImageView imageView = new ImageView(MainActivity.this);
+//                                MostrarCarta(num);
+//                                imageView.setImageResource(R.drawable.beerbottle);
+//                                RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.RelativeLayout01);
+//                                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+//                                        RelativeLayout.LayoutParams.WRAP_CONTENT,
+//                                        RelativeLayout.LayoutParams.WRAP_CONTENT
+//                                );
+//                                layoutParams.addRule(RelativeLayout.BELOW, R.id.ButtonRecalculate);
+//                                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+//                                relativeLayout.addView(imageView, layoutParams);
 
                                 List<Numero> ListaNumeros = new ArrayList<>();
                                 ListaNumeros.add(new Numero( String.valueOf(num), R.drawable.espada1));
@@ -131,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     e.printStackTrace();
                 }
 
-                JsonObjectRequest puntajeJson = new JsonObjectRequest(Request.Method.PUT, urlr, datos, new Response.Listener<JSONObject>() {
+                JsonObjectRequest puntajeJson = new JsonObjectRequest(Request.Method.PUT, urlr, (JSONObject) datos, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_LONG).show();
@@ -142,6 +163,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         error.printStackTrace();
                     }
                 });
+                cartero.add(puntajeJson);
                 puntos = 0;
                 num = 0;
                 puntaje.setText("0");
@@ -160,6 +182,55 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //limpiar recycler, aun no se como
                 break;
 
+        }
+    }
+
+    public void MostrarCarta(int num){
+//        ImageView imageView = new ImageView(MainActivity.this);
+//        MostrarCarta(num);
+//        imageView.setImageResource(R.drawable.beerbottle);
+//        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.RelativeLayout01);
+//        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+//                RelativeLayout.LayoutParams.WRAP_CONTENT,
+//                RelativeLayout.LayoutParams.WRAP_CONTENT
+//        );
+//        layoutParams.addRule(RelativeLayout.BELOW, R.id.ButtonRecalculate);
+//        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+//        relativeLayout.addView(imageView, layoutParams);
+        switch (num) {
+            case 1:
+                imgCarta.setImageResource(R.drawable.espada1);
+                break;
+            case 2:
+                imgCarta.setImageResource(R.drawable.espada2);
+                break;
+            case 3:
+                imgCarta.setImageResource(R.drawable.espada3);
+                break;
+            case 4:
+                imgCarta.setImageResource(R.drawable.espada4);
+                break;
+            case 5:
+                imgCarta.setImageResource(R.drawable.espada5);
+                break;
+            case 6:
+                imgCarta.setImageResource(R.drawable.espada6);
+                break;
+            case 7:
+                imgCarta.setImageResource(R.drawable.espada7);
+                break;
+            case 8:
+                imgCarta.setImageResource(R.drawable.espada8);
+                break;
+            case 9:
+                imgCarta.setImageResource(R.drawable.espada9);
+                break;
+            case 10:
+                imgCarta.setImageResource(R.drawable.espada10);
+                break;
+            case 11:
+                imgCarta.setImageResource(R.drawable.espada11);
+                break;
         }
     }
 }
