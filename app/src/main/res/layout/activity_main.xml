@@ -14,11 +14,13 @@
         android:orientation="horizontal"
         android:layout_weight="1"
         android:weightSum="3">
-        <TextView
+        <EditText
+            android:id="@+id/etNombre"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:text="Tú Juego ↓"
+            android:hint="Ingresa tu Nombre"
+            android:textColor="#fff"
             android:textAlignment="center"
             android:autoSizeTextType="uniform"/>
     </LinearLayout>
@@ -27,7 +29,8 @@
         android:id="@+id/tableroCartas"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3">
+        android:layout_weight="4"
+        android:background="@drawable/tablero">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -43,6 +46,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="0"
+            android:textColor="#fff"
             android:textSize="150sp"
             android:gravity="center"/>
     </LinearLayout>

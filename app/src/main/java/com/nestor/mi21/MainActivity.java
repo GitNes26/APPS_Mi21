@@ -38,13 +38,14 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private RecyclerView rvCartas;
     TextView puntaje;
+    EditText miNombre;
+    private RecyclerView rvCartas;
     private RequestQueue cartero;
     private VolleyS mVolleyS;
     public int num = 0;
     public int puntos = 0;
-    int[] cartas = new int[10];
+    int[] cartas = new int[21];
     int i=0;
 
     @Override
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btnResultados).setOnClickListener(this);
         findViewById(R.id.btnReinicar).setOnClickListener(this);
         puntaje = findViewById(R.id.puntos);
+        miNombre = findViewById(R.id.etNombre);
     }
 
     @Override
@@ -126,11 +128,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.btnEnviar:
                 String urlr = "https://www.ramiro174.com/api/enviar/numero";
-//                nombre.getText();
 
                 JSONObject datos = new JSONObject();
                 try {
-                    datos.put("nombre", "Nestor Puentes");
+                    datos.put("nombre", miNombre.getText());
+
                     datos.put("numero", puntos);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -139,7 +141,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 JsonObjectRequest puntajeJson = new JsonObjectRequest(Request.Method.POST, urlr, (JSONObject) datos, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this,
+                                miNombre.getText()+", tus puntso enviados fueron: "+String.valueOf(puntos),
+                                Toast.LENGTH_LONG).show();
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -155,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 puntaje.setText("0");
                 for (int y=0; y < i; y++){
                     cartas[y]=0;
+//                    rvCartas
                 }
                 break;
 

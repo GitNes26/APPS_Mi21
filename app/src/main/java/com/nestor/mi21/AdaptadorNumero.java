@@ -50,7 +50,7 @@ public class AdaptadorNumero extends RecyclerView.Adapter<AdaptadorNumero.MiHold
         }
 
         public void setData(final Numero modelo) {
-            numero.setText(String.valueOf(modelo.getNumero()));
+//            numero.setText(String.valueOf(modelo.getNumero()));
 
             switch (modelo.getNumero()) {
                 case 1:
