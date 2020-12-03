@@ -63,9 +63,9 @@ public class AdaptadorJugador extends RecyclerView.Adapter<AdaptadorJugador.MiHo
 
         public void setData(final Jugador modelo) {
             foto.setImageResource(R.drawable.gamer);
-            id.setText(modelo.getId());
+            id.setText(String.valueOf(modelo.getId()));
             nombre.setText(modelo.getNombre());
-            numero.setText(modelo.getNumero());
+            numero.setText(String.valueOf(modelo.getNumero()));
             creado.setText(modelo.getCreated_at());
             modificado.setText(modelo.getUpdated_at());
         }

@@ -50,41 +50,44 @@ public class AdaptadorNumero extends RecyclerView.Adapter<AdaptadorNumero.MiHold
         }
 
         public void setData(final Numero modelo) {
-            numero.setText(modelo.getNumero());
+            numero.setText(String.valueOf(modelo.getNumero()));
 
             switch (modelo.getNumero()) {
-                case "1":
+                case 1:
                     carta.setImageResource(R.drawable.espada1);
                     break;
-                case "2":
+                case 2:
                     carta.setImageResource(R.drawable.espada2);
                     break;
-                case "3":
+                case 3:
                     carta.setImageResource(R.drawable.espada3);
                     break;
-                case "4":
+                case 4:
                     carta.setImageResource(R.drawable.espada4);
                     break;
-                case "5":
+                case 5:
                     carta.setImageResource(R.drawable.espada5);
                     break;
-                case "6":
+                case 6:
                     carta.setImageResource(R.drawable.espada6);
                     break;
-                case "7":
+                case 7:
                     carta.setImageResource(R.drawable.espada7);
                     break;
-                case "8":
+                case 8:
                     carta.setImageResource(R.drawable.espada8);
                     break;
-                case "9":
+                case 9:
                     carta.setImageResource(R.drawable.espada9);
                     break;
-                case "10":
+                case 10:
                     carta.setImageResource(R.drawable.espada10);
                     break;
-                case "11":
+                case 11:
                     carta.setImageResource(R.drawable.espada11);
+                    break;
+                default:
+                    carta.setImageResource(R.drawable.logo21);
                     break;
             }
         }

@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,40 +36,40 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private RecyclerView rvCartas;
+    TextView puntaje;
     private RequestQueue cartero;
     private VolleyS mVolleyS;
-    public int num=0;
-    public int puntos=0;
-//    EditText nombre = findViewById(R.id.nombre);
-    ImageView imgCarta;
+    public int num = 0;
+    public int puntos = 0;
+    int[] cartas = new int[10];
+    int i=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        imgCarta = findViewById(R.id.imgCarta);
 
-        rvCartas = findViewById(R.id.recyclerView);
+        rvCartas = findViewById(R.id.tableroCartas);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         rvCartas.setLayoutManager(layoutManager);
 
         //Este es de prueba a manera local
-        List<Numero> ListaNumeros = new ArrayList<>();
-        ListaNumeros.add(new Numero( String.valueOf("1")));
-        ListaNumeros.add(new Numero( String.valueOf("7")));
-        ListaNumeros.add(new Numero( String.valueOf("11")));
+//        List<Numero> ListaNumeros = new ArrayList<>();
+//        ListaNumeros.add(new Numero(String.valueOf("1")));
+//        ListaNumeros.add(new Numero(String.valueOf("7")));
+//        ListaNumeros.add(new Numero(String.valueOf("11")));
 //        for (int i=1; i <=11; i++){
 //          ListaNumeros.add(new Numero( String.valueOf(i)));
 //        }
 //
-        AdaptadorNumero Numeros = new AdaptadorNumero(ListaNumeros);
-        rvCartas.setAdapter(Numeros);
-        
+//        AdaptadorNumero Numeros = new AdaptadorNumero(ListaNumeros);
+//        rvCartas.setAdapter(Numeros);
+
         mVolleyS = VolleyS.getInstance(this.getApplicationContext());
         cartero = mVolleyS.getRequestQueue();
 
@@ -76,12 +77,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btnEnviar).setOnClickListener(this);
         findViewById(R.id.btnResultados).setOnClickListener(this);
         findViewById(R.id.btnReinicar).setOnClickListener(this);
+        puntaje = findViewById(R.id.puntos);
     }
 
     @Override
     public void onClick(View btn) {
-        TextView puntaje = findViewById(R.id.puntos);
-        switch (btn.getId()){
+        switch (btn.getId()) {
             case R.id.btnSolicitar:
                 String url = "https://www.ramiro174.com/api/numero";
 
@@ -94,38 +95,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                 puntos += num;
 
-                                TextView puntaje = findViewById(R.id.puntos);
                                 puntaje.setText(String.valueOf(puntos));
 
-//                                ImageView imageView = new ImageView(MainActivity.this);
-//                                MostrarCarta(num);
-//                                imageView.setImageResource(R.drawable.beerbottle);
-//                                RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.RelativeLayout01);
-//                                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-//                                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-//                                        RelativeLayout.LayoutParams.WRAP_CONTENT
-//                                );
-//                                layoutParams.addRule(RelativeLayout.BELOW, R.id.ButtonRecalculate);
-//                                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-//                                relativeLayout.addView(imageView, layoutParams);
+                                cartas[i]=num;
+                                i++;
+                                List<Numero> ListaCartas = new ArrayList<>();
+                                for (int r=0; r < i; r++) {
+                                    ListaCartas.add(new Numero(cartas[r]));
+                                }
+                                AdaptadorNumero Cartas = new AdaptadorNumero(ListaCartas);
+                                rvCartas.setAdapter(Cartas);
 
-                                List<Numero> ListaNumeros = new ArrayList<>();
-                                ListaNumeros.add(new Numero( String.valueOf(num), R.drawable.espada1));
-                                AdaptadorNumero Numeros = new AdaptadorNumero(ListaNumeros);
-                                rvCartas.setAdapter(Numeros);
-
-//                                Button btnResultado= findViewById(R.id.btnResultados);
-//                                btnResultado.setEnabled(true);
-//                                Gson gson = new Gson();
-//                                final Type CartaType = new TypeToken<List<Numero>>(){}.getType();
-//                                List<Numero> ListaCartas = gson.fromJson(String.valueOf(num), CartaType);
-//                                AdaptadorNumero Cartas = new AdaptadorNumero(ListaCartas);
-//                                rvCartas.setAdapter(Cartas);
-                            }
-                            else{
+                            } else {
 //                                Button btnResultado= findViewById(R.id.btnResultados);
 //                                btnResultado.setEnabled(false);
-                                Toast.makeText(MainActivity.this, "Has perdido, el puntaje maximo de puntos deben ser 21. Reinicia el juego", Toast.LENGTH_LONG).show();
+                                Toast.makeText(MainActivity.this, "Has perdido, el puntaje maximo deben ser 21. Reinicia el juego", Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -152,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     e.printStackTrace();
                 }
 
-                JsonObjectRequest puntajeJson = new JsonObjectRequest(Request.Method.PUT, urlr, (JSONObject) datos, new Response.Listener<JSONObject>() {
+                JsonObjectRequest puntajeJson = new JsonObjectRequest(Request.Method.POST, urlr, (JSONObject) datos, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_LONG).show();
@@ -164,9 +148,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 });
                 cartero.add(puntajeJson);
+
                 puntos = 0;
                 num = 0;
+                i = 0;
                 puntaje.setText("0");
+                for (int y=0; y < i; y++){
+                    cartas[y]=0;
+                }
                 break;
 
             case R.id.btnResultados:
@@ -176,61 +165,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnReinicar:
                 puntos = 0;
                 num = 0;
+                i = 0;
                 puntaje.setText("0");
-//                Button btnResultado= findViewById(R.id.btnResultados);
-//                btnResultado.setEnabled(true);
-                //limpiar recycler, aun no se como
-                break;
-
-        }
-    }
-
-    public void MostrarCarta(int num){
-//        ImageView imageView = new ImageView(MainActivity.this);
-//        MostrarCarta(num);
-//        imageView.setImageResource(R.drawable.beerbottle);
-//        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.RelativeLayout01);
-//        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-//                RelativeLayout.LayoutParams.WRAP_CONTENT,
-//                RelativeLayout.LayoutParams.WRAP_CONTENT
-//        );
-//        layoutParams.addRule(RelativeLayout.BELOW, R.id.ButtonRecalculate);
-//        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-//        relativeLayout.addView(imageView, layoutParams);
-        switch (num) {
-            case 1:
-                imgCarta.setImageResource(R.drawable.espada1);
-                break;
-            case 2:
-                imgCarta.setImageResource(R.drawable.espada2);
-                break;
-            case 3:
-                imgCarta.setImageResource(R.drawable.espada3);
-                break;
-            case 4:
-                imgCarta.setImageResource(R.drawable.espada4);
-                break;
-            case 5:
-                imgCarta.setImageResource(R.drawable.espada5);
-                break;
-            case 6:
-                imgCarta.setImageResource(R.drawable.espada6);
-                break;
-            case 7:
-                imgCarta.setImageResource(R.drawable.espada7);
-                break;
-            case 8:
-                imgCarta.setImageResource(R.drawable.espada8);
-                break;
-            case 9:
-                imgCarta.setImageResource(R.drawable.espada9);
-                break;
-            case 10:
-                imgCarta.setImageResource(R.drawable.espada10);
-                break;
-            case 11:
-                imgCarta.setImageResource(R.drawable.espada11);
+                for (int x=0; x < i; x++){
+                    cartas[x]=0;
+                }
                 break;
         }
     }
+
 }

@@ -2,14 +2,13 @@ package com.nestor.mi21;
 
 public class Jugador {
     private int foto;
-    private String  id;
+    private int  id;
     private String nombre;
-    private String numero;
+    private int numero;
     private String created_at;
     private String updated_at;
 
-
-    public Jugador(int foto, String id, String nombre, String numero, String created_at, String updated_at) {
+    public Jugador(int foto, int id, String nombre, int numero, String created_at, String updated_at) {
         this.foto = foto;
         this.id = id;
         this.nombre = nombre;
@@ -26,11 +25,11 @@ public class Jugador {
         this.foto = foto;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -42,11 +41,11 @@ public class Jugador {
         this.nombre = nombre;
     }
 
-    public String getNumero() {
+    public int getNumero() {
         return numero;
     }
 
-    public void setNumero(String numero) {
+    public void setNumero(int numero) {
         this.numero = numero;
     }
 

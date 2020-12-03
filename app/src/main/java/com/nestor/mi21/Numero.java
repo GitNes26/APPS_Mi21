@@ -1,23 +1,23 @@
 package com.nestor.mi21;
 
 public class Numero {
-    private String numero;
+    private int numero;
     private int carta;
 
-    public Numero(String numero, int carta) {
+    public Numero(int numero, int carta) {
         this.numero = numero;
         this.carta = carta;
     }
 
-    public Numero(String numero) {
+    public Numero(int numero) {
         this.numero = numero;
     }
 
-    public String getNumero() {
+    public int getNumero() {
         return numero;
     }
 
-    public void setNumero(String numero) {
+    public void setNumero(int numero) {
         this.numero = numero;
     }
 
