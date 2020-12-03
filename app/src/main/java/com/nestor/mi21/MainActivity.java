@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onResponse(JSONObject response) {
                         Toast.makeText(MainActivity.this,
-                                miNombre.getText()+", tus puntso enviados fueron: "+String.valueOf(puntos),
+                                miNombre.getText()+", tus puntso enviados fueron.",
                                 Toast.LENGTH_LONG).show();
                     }
                 }, new Response.ErrorListener() {
